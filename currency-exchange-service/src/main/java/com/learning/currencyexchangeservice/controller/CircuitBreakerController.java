@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 public class CircuitBreakerController {
 
     @GetMapping("/sample-api")
-    @Retry(name = "sample-api")
+    @Retry(name = "sample-api", fallbackMethod = "fallback")
     public String sampleApi() {
         log.info(" ----> Sample api call received.");
 
@@ -23,5 +23,9 @@ public class CircuitBreakerController {
                 );
 
         return entity.getBody();
+    }
+
+    public String fallback(Exception ex) {
+        return "fallback";
     }
 }
