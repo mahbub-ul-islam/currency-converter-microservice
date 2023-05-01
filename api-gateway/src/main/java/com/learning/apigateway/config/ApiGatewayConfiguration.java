@@ -13,11 +13,12 @@ public class ApiGatewayConfiguration {
     public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
         return builder
                 .routes()
-                .route(p -> p.path("/get")
-                        .filters(f -> f
-                                        .addRequestHeader("MyHeader", "MyUrl")
-                                        .addRequestParameter("Param", "Myvalue"))
-                        .uri("http://httpbin.org:80"))
+                .route(p -> p.path("/currency-exchange/**")
+                        .uri("lb://currency-exchange-service"))
+                .route(p -> p.path("/currency-conversion/**")
+                        .uri("lb://currency-conversion-service"))
+                .route(p -> p.path("/currency-conversion-feign/**")
+                        .uri("lb://currency-conversion-service"))
                 .build();
     }
 }
