@@ -1,5 +1,6 @@
 package com.learning.currencyexchangeservice.controller;
 
+import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
@@ -17,7 +18,8 @@ public class CircuitBreakerController {
 //    @Retry(name = "sample-api", fallbackMethod = "fallback")
 //    @CircuitBreaker(name = "default", fallbackMethod = "fallback")
 //    RateLimiter => in 10s 10000 calls to the api
-    @RateLimiter(name = "default")
+//    @RateLimiter(name = "default")
+    @Bulkhead(name = "default")
     public String sampleApi() {
         log.info(" ----> Sample api call received.");
 
