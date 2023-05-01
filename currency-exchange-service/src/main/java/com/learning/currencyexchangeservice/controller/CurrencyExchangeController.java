@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("/currency-exchange")
 public class CurrencyExchangeController {
 
     @Autowired
@@ -21,7 +20,7 @@ public class CurrencyExchangeController {
     @Autowired
     private CurrencyExchangeRepository repository;
 
-    @GetMapping("/from/{from}/to/{to}")
+    @GetMapping("/currency-exchange/from/{from}/to/{to}")
     public CurrencyExchange retrieveExchangeValue(
             @PathVariable String from,
             @PathVariable String to
