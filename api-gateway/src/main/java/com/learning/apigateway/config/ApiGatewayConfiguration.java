@@ -19,6 +19,15 @@ public class ApiGatewayConfiguration {
                         .uri("lb://currency-conversion-service"))
                 .route(p -> p.path("/currency-conversion-feign/**")
                         .uri("lb://currency-conversion-service"))
+//                redirect currency-conversion-new to currency-conversion-feign
+                .route(p -> p.path("/currency-conversion-new/**")
+//                                (?<segment>.*)    defining regular expression identifying as segment
+//                                ${segment}    the segment
+                        .filters(f -> f.rewritePath(
+                                "/currency-conversion-new/(?<segment>.*)",
+                                "/currency-conversion-feign/${segment}"
+                        ))
+                        .uri("lb://currency-conversion-service"))
                 .build();
     }
 }
