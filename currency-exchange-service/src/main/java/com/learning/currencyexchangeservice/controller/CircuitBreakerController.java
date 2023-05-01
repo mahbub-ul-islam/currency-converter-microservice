@@ -1,5 +1,6 @@
 package com.learning.currencyexchangeservice.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,8 @@ import org.springframework.web.client.RestTemplate;
 public class CircuitBreakerController {
 
     @GetMapping("/sample-api")
-    @Retry(name = "sample-api", fallbackMethod = "fallback")
+//    @Retry(name = "sample-api", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "default", fallbackMethod = "fallback")
     public String sampleApi() {
         log.info(" ----> Sample api call received.");
 
