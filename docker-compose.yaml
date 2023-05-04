@@ -17,6 +17,8 @@ services:
     environment:
       EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
+      RABBIT_URI: ampq://guest:guest@rabbitmq:5672
+      SPRING.RABBITMQ_HOST: rabbitmq
 
   currency-conversion-service:
     image: currency-conversion:1.0
@@ -30,6 +32,8 @@ services:
     environment:
       EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
+      RABBIT_URI: ampq://guest:guest@rabbitmq:5672
+      SPRING.RABBITMQ_HOST: rabbitmq
 
   api-gateway:
     image: api-gateway:1.0
@@ -43,6 +47,8 @@ services:
     environment:
       EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://naming-server:8761/eureka
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411
+      RABBIT_URI: ampq://guest:guest@rabbitmq:5672
+      SPRING.RABBITMQ_HOST: rabbitmq
 
   naming-server:
     image: naming-server:1.0
@@ -55,5 +61,15 @@ services:
     image: openzipkin/zipkin:2.23
     ports:
       - "9411:9411"
+    networks:
+      - currency-network
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - currency-network
