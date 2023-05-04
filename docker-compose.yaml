@@ -11,3 +11,14 @@ services:
       - "8000:8000"
     networks:
       - currency-network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://naming-server:8761/eureka
+
+  naming-server:
+    image: naming-server:1.0
+    ports:
+      - "8761:8761"
+    networks:
+      - currency-network
