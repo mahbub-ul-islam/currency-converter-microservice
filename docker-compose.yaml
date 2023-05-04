@@ -27,6 +27,17 @@ services:
     environment:
       EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://naming-server:8761/eureka
 
+  api-gateway:
+    image: api-gateway:1.0
+    ports:
+      - "8765:8765"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+    environment:
+      EUREKA.CLIENT.SERVICE-URL.DEFAULTZONE: http://naming-server:8761/eureka
+
   naming-server:
     image: naming-server:1.0
     ports:
